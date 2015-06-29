@@ -17,7 +17,7 @@ pygame.mouse.set_visible(1)
 
 carte.fill(BLANC) #On remplit la carte en blanc
 #pygame.display.update() #On la met à jour
-
+pygame.display.update()
 #On définit la structure de la carte
 Str_carte=[
 # 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
@@ -50,19 +50,19 @@ def yReel(y):
 
 def Mur(xcoord,ycoord,genre):
 	if genre==1:
-		coulmur=BROWN
+		coul=BROWN
 	else:
-		coulchemin=GREY
-	pygame.draw.rect(carte,coulmur,(xReel(xcoord),yReel(ycoord),80,46))
-	pygame.draw.rect(carte,coulchemin,(xReel(xcoord),yReel(ycoord),80,46))
+		coul=GREY
+	pygame.draw.rect(carte,coul,(xReel(xcoord),yReel(ycoord),80,46))
 
-NbMur=0
+
+
 for x in range(0,20):
 	for y in range(0,14):
-		if Str_carte[y-1][x-1]!=0:
-			Mur(x,y,Str_carte[y-1][x-1])
-			Nbmur+=1
-pygame.display.update()
+		if Str_carte[y][x]!=0:
+			Mur(x,y,Str_carte[y][x])
+			
+
 
 
 #--------------------------------------------BOUCLE POUR QUE LA FENETRE REPONDE--------------------------------------------
