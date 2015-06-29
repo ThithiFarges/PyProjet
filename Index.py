@@ -11,7 +11,7 @@ GREY=(122,122,82)
 BROWN=(102,51,0)
 #MISE EN PLACE DE LA FENËTRE
 
-carte=pygame.display.set_mode((1600,700), RESIZABLE) # On ouvre une fenêtre graphique de 440*480 (large*hauteur) + la taille peut s'adapter
+carte=pygame.display.set_mode((1500,700), RESIZABLE) # On ouvre une fenêtre graphique de 440*480 (large*hauteur) + la taille peut s'adapter
 pygame.display.set_caption('PyProjet') #On nomme la fenêtre Pyprojet
 pygame.mouse.set_visible(1)
 
@@ -22,7 +22,7 @@ pygame.display.update()
 Str_carte=[
 # 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 ,0, 1],
+ [1,2,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2 ,2, 2 ,1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -39,7 +39,7 @@ Str_carte=[
 ]
 #On met les coordonnées du tableau à l'échelle de la fenêtre
 def xReel(x):
-	x=x*80
+	x=x*71
 	return x
 
 def yReel(y):
@@ -49,11 +49,11 @@ def yReel(y):
 #Fonction donnant une couleur aux cases en fonction des valeurs du tableau de la carte c'est à dire Str_carte
 
 def Mur(xcoord,ycoord,genre):
-	if genre==1:
-		coul=BROWN
-	else:
+	if genre==2:
 		coul=GREY
-	pygame.draw.rect(carte,coul,(xReel(xcoord),yReel(ycoord),80,46))
+	else: 
+		coul=BROWN
+	pygame.draw.rect(carte,coul,(xReel(xcoord),yReel(ycoord),71,46))
 
 
 
