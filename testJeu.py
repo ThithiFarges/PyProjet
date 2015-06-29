@@ -16,7 +16,7 @@ pygame.display.set_caption('PyProjet') #On nomme la fenêtre Pyprojet
 pygame.mouse.set_visible(1)
 
 carte.fill(BLANC) #On remplit la carte en blanc
-pygame.display.update() #On la met à jour
+#pygame.display.update() #On la met à jour
 
 #On définit la structure de la carte
 Str_carte=[
@@ -48,14 +48,21 @@ def yReel(y):
 
 #Fonction donnant une couleur aux cases en fonction des valeurs du tableau de la carte c'est à dire Str_carte
 
-def Mur(xcoord,ycoord,col):
-	if col==1:
+def Mur(xcoord,ycoord,genre):
+	if genre==1:
 		coulmur=BROWN
 	else:
 		coulchemin=GREY
-	pygame.draw.rect(Str_map,coulmur,(xReel(xcoord),yReel(ycoord),80,46))
-	pygame.draw.rect(Str_map,coulchemin,(xReel(xcoord),yReel(ycoord),80,46))
+	pygame.draw.rect(carte,coulmur,(xReel(xcoord),yReel(ycoord),80,46))
+	pygame.draw.rect(carte,coulchemin,(xReel(xcoord),yReel(ycoord),80,46))
 
+NbMur=0
+for x in range(0,20):
+	for y in range(0,14):
+		if Str_carte[y-1][x-1]!=0:
+			Mur(x,y,Str_carte[y-1][x-1])
+			Nbmur+=1
+pygame.display.update()
 
 
 #--------------------------------------------BOUCLE POUR QUE LA FENETRE REPONDE--------------------------------------------
