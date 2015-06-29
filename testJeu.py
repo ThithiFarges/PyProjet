@@ -8,10 +8,9 @@ pygame.init() #On initialise la fenêtre
 #VARIABLE ET CONSTANTES
 BLANC= (255,255,255)  #Avec le modèle rgb (red, green, blue)
 
-
 #MISE EN PLACE DE LA FENËTRE
 
-carte=pygame.display.set_mode((1600,700)) # On ouvre une fenêtre graphique de 440*480 (large*hauteur) en pixel
+carte=pygame.display.set_mode((1600,700), RESIZABLE) # On ouvre une fenêtre graphique de 440*480 (large*hauteur) + la taille peut s'adapter
 pygame.display.set_caption('PyProjet') #On nomme la fenêtre Pyprojet
 pygame.mouse.set_visible(1)
 
@@ -24,3 +23,11 @@ Str_carte=[
  [0,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 ,0, 0],
  [0,0,0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0 ,0, 0 ,0, 0]
 ]
+continuer = 1
+
+#Boucle infinie
+while continuer:
+	for event in pygame.event.get():   #On parcours la liste de tous les événements reçus
+		if event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
+			continuer = 0      #On arrête la boucle
+pygame.quit()
