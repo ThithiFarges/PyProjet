@@ -4,6 +4,7 @@ import pygame,sys,time,random #on importe la librairie pygame avec quelques modu
 from pygame.locals import *
 
 pygame.init() #On initialise la fenêtre
+pygame.key.set_repeat(10, 200)
 
 #VARIABLE ET CONSTANTES
 BLANC= (255,255,255)  #Avec le modèle rgb (red, green, blue)
@@ -102,12 +103,15 @@ def move(xperso,yperso,enx,eny):
 
 
 
+continuer = 1
 
-z=1
-while z:
+while continuer:
 	for event in pygame.event.get():
 		if event.type == KEYDOWN:
+
 			if event.key == K_RIGHT:
+			#if pygame.key.get_pressed()[pygame.K_RIGHT]:
+
 				(xperso,yperso)=move(xperso,yperso,71,0)
 			
 			if event.key == K_LEFT:
@@ -119,15 +123,12 @@ while z:
 			if event.key == K_DOWN:
 				(xperso,yperso)=move(xperso,yperso,0,46)
 
+		if event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
+			continuer = 0
 
-
+pygame.quit()
 
 #--------------------------------------------BOUCLE POUR QUE LA FENETRE REPONDE--------------------------------------------
-continuer = 1
 
-#Boucle infinie
-while continuer:
-	for event in pygame.event.get():   #On parcours la liste de tous les événements reçus
-		if event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
-			continuer = 0      #On arrête la boucle
-pygame.quit()
+
+
