@@ -123,10 +123,10 @@ while continuer:
 			if event.key == K_DOWN:
 				(xperso,yperso)=move(xperso,yperso,0,46,1)
 			
-			if event.key== K_z:
+			if event.key== K_w:
 				(xperso2,yperso2)=move(xperso2,yperso2,0,-46,2)
 
-			if event.key== K_q:
+			if event.key== K_a:
 				(xperso2,yperso2)=move(xperso2,yperso2,-71,0,2)
 
 			if event.key== K_s:
