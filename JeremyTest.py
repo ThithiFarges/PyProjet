@@ -24,16 +24,16 @@ Str_carte=[
 # 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,3,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2 ,2, 2 ,1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
@@ -56,9 +56,7 @@ def Perso(xcoord,ycoord,tour):
 		yperso=yReel(ycoord)+46/4
 	else:
 		xperso=xcoord
-		yperso=ycoord	
-	print(xperso)
-	print(yperso)
+		yperso=ycoord
 	coul=BLEU
 	pygame.draw.rect(carte,coul,(xperso,yperso,71/2,46/2))
 	return (xperso,yperso)
@@ -78,7 +76,29 @@ for x in range(0,20):
 			Mur(x,y,Str_carte[y][x],1)
 			if Str_carte[y][x]==3:
 				(xperso,yperso)=Perso(x,y,1)
+pygame.display.update()
+
+def Verif(futurx,futury):
+	if Str_carte[futury/46][futurx/71]!=1:
+		return 1
+
 #--------------------------------------------------------------------------------------------------------------------------
+def move(xperso,yperso,enx,eny):
+	verif=Verif(xperso+enx,yperso+eny)
+	if verif==1:
+		Mur(xperso,yperso,2,0)
+		xperso=xperso+enx
+		yperso=yperso+eny
+		(xperso,yperso)=Perso(xperso,yperso,0)
+		pygame.display.update()
+		return (xperso,yperso)
+	else:
+		pygame.display.update()
+		return (xperso,yperso)
+	
+
+
+
 
 
 
@@ -88,13 +108,16 @@ while z:
 	for event in pygame.event.get():
 		if event.type == KEYDOWN:
 			if event.key == K_RIGHT:
-				print(xperso)
-				print(yperso)
-				Mur(xperso,yperso,2,0)
-				xperso=xperso+71
-				(xperso,yperso)=Perso(xperso,yperso,0)
-				print(xperso)
-				
+				(xperso,yperso)=move(xperso,yperso,71,0)
+			
+			if event.key == K_LEFT:
+				(xperso,yperso)=move(xperso,yperso,-71,0)
+
+			if event.key == K_UP:
+				(xperso,yperso)=move(xperso,yperso,0,-46)
+
+			if event.key == K_DOWN:
+				(xperso,yperso)=move(xperso,yperso,0,46)
 
 
 
