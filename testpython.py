@@ -77,27 +77,30 @@ def bouger(xperso,yperso):
 		for event in pygame.event.get():
 			if event.type == KEYDOWN:
 				if event.key == K_RIGHT:
-					xperso=xpersonnage+71
-					yperso=ypersonnage
-					(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
+					xperso=xperso+71
+					yperso=yperso
+					(xpersonnage,ypersonnage)=Personnage(xperso,yperso,1)
+					print xperso
 					return (xperso,yperso)
-				elif event.key == K_LEFT:
-					xperso=xpersonnage-71
-					yperso=ypersonnage
-					(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
+				if event.key == K_LEFT:
+					xperso=xperso-71
+					yperso=yperso
+					(xpersonnage,ypersonnage)=Personnage(xperso,yperso,1)
 					return (xperso,yperso)
-				elif event.key == K_DOWN:
-					xperso=xpersonnage
-					yperso=ypersonnage+46
-					(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
+				if event.key == K_DOWN:
+					xperso=xperso
+					yperso=yperso+46
+					(xpersonnage,ypersonnage)=Personnage(xperso,yperso,1)
 					return (xperso,yperso)
-				elif event.key == K_UP:
-					xperso=xpersonnage
-					yperso=ypersonnage-46
-					(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
+				if event.key == K_UP:
+					xperso=xperso
+					yperso=yperso-46
+					(xpersonnage,ypersonnage)=Personnage(xperso,yperso,1)
 					return (xperso,yperso)
-				elif event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
+			if event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
 					continuer = 0
+
+			pygame.display.update()
 	pygame.quit()
 
 
@@ -105,6 +108,7 @@ def bouger(xperso,yperso):
 
 Case()
 (xpersonnage,ypersonnage)=Personnage(xReel(2),yReel(1),1)
+pygame.display.update()
 bouger(xpersonnage,ypersonnage)
 pygame.display.update()
 	
