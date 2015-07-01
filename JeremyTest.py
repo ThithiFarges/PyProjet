@@ -99,16 +99,16 @@ def egaux():
 	return coord
 
 
-def move(xperso,yperso,enx,eny,nb):
-	verif=Verif(xperso+enx,yperso+eny)
+def move(xperso,yperso,de_x,de_y,nb):
+	verif=Verif(xperso+de_x,yperso+de_y)
 	if verif==1:
 		coord=egaux()
 		if coord==0:
 			Case(xperso,yperso,2,0)
 		if coord==1:
 			Perso(xperso,yperso,2,3-nb)
-		xperso=xperso+enx
-		yperso=yperso+eny
+		xperso=xperso+de_x
+		yperso=yperso+de_y
 		(xperso,yperso)=Perso(xperso,yperso,0,nb)
 		pygame.display.update()
 		return (xperso,yperso)
