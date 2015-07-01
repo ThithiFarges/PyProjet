@@ -27,7 +27,7 @@ pygame.display.update()
 Str_carte=[
 # 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,3,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2 ,2, 2 ,1, 1],
+ [1,2,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2 ,2, 2 ,1, 1],
  [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
  [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
  [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
@@ -39,23 +39,25 @@ Str_carte=[
  [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
  [1,2,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,4,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+ [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
+imgjoueur1= pygame.image.load("Nibbler.jpg").convert()
+#imgjoueur2=pygame.image.load('Nibbler.jpg').convert()
 #imgmur=pygame.draw.rect(carte,BROWN,71,46)
 
 def xReel(x):
-	x=x*(longueur_fenetre/20)
+	x=x*(longueur_fenetre/21)
 	return x
 def yReel(y):
 	y=y*(largeur_fenetre/15)
 	return y
 def Personnage(xpersonnage,ypersonnage,numero):
 	if numero==1:
-		surface.blit(imgjoueur1,xpersonnage,ypersonnage)
+		carte.blit(imgjoueur1,(xpersonnage,ypersonnage))
 	else:
-		surface.blit(imgjoueur1,xpersonnage,ypersonnage)
+		carte.blit(imgjoueur1,(xpersonnage,ypersonnage))
 	return (xpersonnage,ypersonnage)
 
 def Case():
@@ -70,49 +72,40 @@ def Case():
 
 
 def bouger(xperso,yperso):
-	for event in pygame.event.get():
-		if event.type == KEYDOWN:
-			if event.key == K_RIGHT:
-				xperso=xpersonnage+71
-				yperso=ypersonnage
-				(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
-				return (xperso,yperso)
-			elif event.key == K_LEFT:
-				xperso=xpersonnage-71
-				yperso=ypersonnage
-				(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
-				return (xperso,yperso)
-			elif event.key == K_DOWN:
-				xperso=xpersonnage
-				yperso=ypersonnage+46
-				(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
-				return (xperso,yperso)
-			elif event.key == K_UP:
-				xperso=xpersonnage
-				yperso=ypersonnage-46
-				(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
-				return (xperso,yperso)
+	continuer = 1	
+	while continuer:
+		for event in pygame.event.get():
+			if event.type == KEYDOWN:
+				if event.key == K_RIGHT:
+					xperso=xpersonnage+71
+					yperso=ypersonnage
+					(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
+					return (xperso,yperso)
+				elif event.key == K_LEFT:
+					xperso=xpersonnage-71
+					yperso=ypersonnage
+					(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
+					return (xperso,yperso)
+				elif event.key == K_DOWN:
+					xperso=xpersonnage
+					yperso=ypersonnage+46
+					(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
+					return (xperso,yperso)
+				elif event.key == K_UP:
+					xperso=xpersonnage
+					yperso=ypersonnage-46
+					(ypersonnage,xpersonnage)=Personnage(xpersonnage,ypersonnage,1)
+					return (xperso,yperso)
+				elif event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
+					continuer = 0
+	pygame.quit()
 
 
 
 
+Case()
+(xpersonnage,ypersonnage)=Personnage(xReel(2),yReel(1),1)
+bouger(xpersonnage,ypersonnage)
+pygame.display.update()
+	
 
-
-
-
-
-imgjoueur1=pygame.draw.rect(carte,BLEU,(xReel(2),yReel(5),71,46))
-imgjoueur2=pygame.draw.rect(carte,NOIR,(xReel(8),yReel(5),71,46))
-
-
-continuer = 1
-while continuer:
-	imgjoueur2
-	imgjoueur1
-	Case()
-	#bouger(xpersonnage,ypersonnage)
-	pygame.display.update()
-	if event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
-			continuer = 0
-
-pygame.quit()	
