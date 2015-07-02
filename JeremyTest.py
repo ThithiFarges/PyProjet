@@ -12,6 +12,7 @@ GREY=(122,122,82)
 BROWN=(102,51,0)
 BLEU=(0,0,255)
 NOIR=(0,0,0)
+BLEUGRIS=(85,128,170)
 #MISE EN PLACE DE LA FENËTRE
 
 carte=pygame.display.set_mode((1500,700), RESIZABLE) # On ouvre une fenêtre graphique de 440*480 (large*hauteur) + la taille peut s'adapter
@@ -21,25 +22,7 @@ pygame.mouse.set_visible(1) #on rend visible la souris sur l'écran
 carte.fill(BLANC) #On remplit la carte en blanc
 #pygame.display.update() #On la met à jour
 pygame.display.update()
-#On définit la structure de la carte
-Str_carte=[
-# 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,3,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2 ,2, 2 ,1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-]
+
 #On met les coordonnées du tableau à l'échelle de la fenêtre
 def xReel(x):
 	x=x*71
@@ -71,12 +54,38 @@ def Perso(xcoord,ycoord,tour,nb):
 def Case(xcoord,ycoord,genre,tour):
 	if genre==1:
 		coul=BROWN
+	elif genre==4:
+		coul=BLEUGRIS
 	else:
 		coul=GREY
 	if tour==1:
 		pygame.draw.rect(carte,coul,(xReel(xcoord),yReel(ycoord),71,46))
-	else: pygame.draw.rect(carte,coul,(xcoord,ycoord,71/2,46/2))
+	else: 
+		if coul==BLEU or coul==NOIR:
+			pygame.draw.rect(carte,coul,(xcoord,ycoord,71/2,46/2))
+		else:
+			pygame.draw.rect(carte,coul,(xcoord-71/4,ycoord-46/4,71,46))
 
+#On définit la structure de la carte
+
+Str_carte=[
+# 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+ [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+ [1,3,2,2,2,4,2,2,2,2, 2, 2, 2, 2, 2, 2, 2 ,2, 2 ,1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1],
+ [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+ [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+ [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+]
 for x in range(0,20):
 	for y in range(0,14):
 		if Str_carte[y][x]!=0:
@@ -84,12 +93,28 @@ for x in range(0,20):
 			if Str_carte[y][x]==3:
 				(xperso,yperso)=Perso(x,y,1,1)
 				(xperso2,yperso2)=Perso(x,y,1,2)
-		
+
+
 pygame.display.update()
+def Echange(coord1, coord2, coord3, coord4):
+
+	a=Str_carte[coord1/46][coord2/71]
+	b=Str_carte[coord3/46][coord4/71]
+	Str_carte[coord3/46][coord4/71]=a
+	Str_carte[coord1/46][coord2/71]=b
+	pygame.display.update()
+
+
 
 def Verif(futurx,futury): #on vérifie la position du joueur
-	if Str_carte[futury/46][futurx/71]!=1:
-		return 1
+	if Str_carte[futury/46][futurx/71]==2 or Str_carte[futury/46][futurx/71]==3:
+		if xperso==futurx and yperso==futury or xperso2==futurx and yperso2==futury:
+			return 0
+		else:
+			return 1
+	if Str_carte[futury/46][futurx/71]==4:
+		return 2
+
 
 def egaux():
 	if xperso==xperso2 and yperso==yperso2:
@@ -98,20 +123,35 @@ def egaux():
 		coord=0
 	return coord
 
+def moveperso(xperso,yperso,de_x,de_y,nb):
+	coord=egaux()
+	if coord==0:
+		Case(xperso,yperso,2,0)
+	if coord==1:
+		Perso(xperso,yperso,2,3-nb)
+	xperso=xperso+de_x
+	yperso=yperso+de_y
+	(xperso,yperso)=Perso(xperso,yperso,0,nb)
+	return (xperso,yperso)
 
 def move(xperso,yperso,de_x,de_y,nb):
 	verif=Verif(xperso+de_x,yperso+de_y)
 	if verif==1:
-		coord=egaux()
-		if coord==0:
-			Case(xperso,yperso,2,0)
-		if coord==1:
-			Perso(xperso,yperso,2,3-nb)
-		xperso=xperso+de_x
-		yperso=yperso+de_y
-		(xperso,yperso)=Perso(xperso,yperso,0,nb)
+		(xperso,yperso)=moveperso(xperso,yperso,de_x,de_y,nb)
 		pygame.display.update()
 		return (xperso,yperso)
+	if verif==2:
+		verifmur=Verif(xperso+2*de_x,yperso+2*de_y)
+		if verifmur==1:
+			Case(xperso+de_x,yperso+de_y,2,0)
+			Case(xperso+2*de_x,yperso+2*de_y,4,0)
+			(xperso,yperso)=moveperso(xperso,yperso,de_x,de_y,nb)
+			Echange(yperso, xperso, yperso+de_y, xperso+de_x)
+			pygame.display.update()
+			return (xperso,yperso)
+		else:
+			pygame.display.update()
+			return (xperso,yperso)
 	else:
 		pygame.display.update()
 		return (xperso,yperso)
