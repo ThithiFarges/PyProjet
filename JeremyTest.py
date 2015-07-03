@@ -72,15 +72,15 @@ Str_carte=[
 # 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,3,2,2,2,4,2,2,2,2, 2, 2, 2, 2, 2, 2, 2 ,2, 2 ,1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,4,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
  [1,2,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -106,10 +106,13 @@ def Echange(coord1, coord2, coord3, coord4):
 
 
 
-def Verif(futurx,futury): #on vérifie la position du joueur
+def Verif(futurx,futury,mur): #on vérifie la position du joueur
 	if Str_carte[futury/46][futurx/71]==2 or Str_carte[futury/46][futurx/71]==3:
-		if xperso==futurx and yperso==futury or xperso2==futurx and yperso2==futury:
-			return 0
+		if mur==1:
+			if xperso==futurx and yperso==futury or xperso2==futurx and yperso2==futury:
+				return 0
+			else:
+				return 1
 		else:
 			return 1
 	if Str_carte[futury/46][futurx/71]==4:
@@ -135,13 +138,13 @@ def moveperso(xperso,yperso,de_x,de_y,nb):
 	return (xperso,yperso)
 
 def move(xperso,yperso,de_x,de_y,nb):
-	verif=Verif(xperso+de_x,yperso+de_y)
+	verif=Verif(xperso+de_x,yperso+de_y,0)
 	if verif==1:
 		(xperso,yperso)=moveperso(xperso,yperso,de_x,de_y,nb)
 		pygame.display.update()
 		return (xperso,yperso)
 	if verif==2:
-		verifmur=Verif(xperso+2*de_x,yperso+2*de_y)
+		verifmur=Verif(xperso+2*de_x,yperso+2*de_y,1)
 		if verifmur==1:
 			Case(xperso+de_x,yperso+de_y,2,0)
 			Case(xperso+2*de_x,yperso+2*de_y,4,0)
