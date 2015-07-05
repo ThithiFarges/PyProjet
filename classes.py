@@ -1,28 +1,20 @@
-#Programme du jeu PyProjet
+#!/usr/bin/python3
+# -*- coding: Utf-8 -*
+#################################################################################
+# 																				#
+# 																				#
+# 																				#
+# 		       				DECLARATION DES CLASSES DU JEU						#
+# 																				#
+# 																				#
+# 																				#
+#################################################################################
 
-import pygame,sys,time,random #on importe la librairie pygame avec quelques modules
-from pygame.locals import *
+import pygame
+from pygame.locals import * 
+from constantes import *
 
-pygame.init() #On initialise la fenêtre
-pygame.key.set_repeat(10, 200) #permet de continuer la déplacement en restant appuyer sur la touche
-
-#VARIABLE ET CONSTANTES
-BLANC= (255,255,255)  #Avec le modèle rgb (red, green, blue)
-GREY=(122,122,82)
-BROWN=(102,51,0)
-BLEU=(0,0,255)
-NOIR=(0,0,0)
-BLEUGRIS=(85,128,170)
-YELLOW=(255, 255, 71)
-#MISE EN PLACE DE LA FENËTRE
-
-carte=pygame.display.set_mode((1500,700), RESIZABLE) # On ouvre une fenêtre graphique de 440*480 (large*hauteur) + la taille peut s'adapter
-pygame.display.set_caption('PyProjet') #On nomme la fenêtre Pyprojet
-pygame.mouse.set_visible(1) #on rend visible la souris sur l'écran
-
-carte.fill(BLANC) #On remplit la carte en blanc
-#pygame.display.update() #On la met à jour
-pygame.display.update()
+carte=pygame.display.set_mode((longueur_fenetre,largeur_fenetre), RESIZABLE)
 
 #On met les coordonnées du tableau à l'échelle de la fenêtre
 def xReel(x):
@@ -73,22 +65,20 @@ Str_carte=[
 # 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,3,2,2,2,4,2,2,2,2, 2, 2, 2, 2, 2, 2, 2 ,2, 2 ,1, 1],
- [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,4,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
- [1,2,1,1,1,1,1,2,1,1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,4,1,2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1],
+ [1,2,1,1,1,1,1,2,1,2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,1,2,1,2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,2,2,2,2,1,2,1,2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
+ [1,2,1,1,1,1,2,2,1,2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1],
  [1,2,2,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
- [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+ [1,1,1,2,1,1,2,1,1,2, 1, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1],
+ [1,1,1,2,2,2,2,2,2,2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
-
-pygame.display.update()
 def Echange(coord1, coord2, coord3, coord4):
 
 	a=Str_carte[coord1/46][coord2/71]
@@ -96,8 +86,6 @@ def Echange(coord1, coord2, coord3, coord4):
 	Str_carte[coord3/46][coord4/71]=a
 	Str_carte[coord1/46][coord2/71]=b
 	pygame.display.update()
-
-
 
 def Verif(futurx,futury,mur): #on vérifie la position du joueur
 	if Str_carte[futury/46][futurx/71]==2 or Str_carte[futury/46][futurx/71]==3:
@@ -111,8 +99,14 @@ def Verif(futurx,futury,mur): #on vérifie la position du joueur
 	if Str_carte[futury/46][futurx/71]==4:
 		return 2
 
+global xperso,yperso,xperso2,yperso2
+"""xperso=1
+yperso=2
+xperso2=3
+yperso2=4"""
 
 def egaux():
+	#global xperso,yperso,xperso2,yperso2
 	if xperso==xperso2 and yperso==yperso2:
 		coord=1
 	else:
@@ -165,60 +159,3 @@ def tirer(xperso,yperso,direction):
 		x_debut+=1
 		x_fin+=1
 	return(xperso,yperso)
-
-#################################################################################
-# 										#
-# 										#
-# 										#
-# 		       DEBUT DE LA BOUCLE PRINCIPALE				#
-# 										#
-# 										#
-# 										#										
-#################################################################################
-
-
-for x in range(0,20):
-	for y in range(0,14):
-		if Str_carte[y][x]!=0:
-			Case(x,y,Str_carte[y][x],1)
-			if Str_carte[y][x]==3:
-				(xperso,yperso)=Perso(x,y,1,1)
-				(xperso2,yperso2)=Perso(x,y,1,2)
-
-
-tirer(0,0,1)
-
-continuer=1
-
-while continuer:
-	for event in pygame.event.get():
-
-		if event.type == KEYDOWN:
-			if event.key == K_RIGHT:
-				(xperso,yperso)=move(xperso,yperso,71,0,1)
-			
-			if event.key == K_LEFT:
-				(xperso,yperso)=move(xperso,yperso,-71,0,1)
-
-			if event.key == K_UP:
-				(xperso,yperso)=move(xperso,yperso,0,-46,1)
-
-			if event.key == K_DOWN:
-				(xperso,yperso)=move(xperso,yperso,0,46,1)
-			
-			if event.key== K_w:
-				(xperso2,yperso2)=move(xperso2,yperso2,0,-46,2)
-
-			if event.key== K_a:
-				(xperso2,yperso2)=move(xperso2,yperso2,-71,0,2)
-
-			if event.key== K_s:
-				(xperso2,yperso2)=move(xperso2,yperso2,0,46,2)
-
-			if event.key== K_d:
-				(xperso2,yperso2)=move(xperso2,yperso2,71,0,2)
-
-		if event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
-			continuer = 0
-
-pygame.quit()
