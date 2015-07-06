@@ -185,7 +185,6 @@ for x in range(0,20):
 				(xperso,yperso)=Perso(x,y,1,1)
 				(xperso2,yperso2)=Perso(x,y,1,2)
 pygame.display.update()
-
 tirer(0,0,1)
 
 continuer=1
