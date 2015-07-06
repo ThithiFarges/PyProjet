@@ -13,6 +13,7 @@ BROWN=(102,51,0)
 BLEU=(0,0,255)
 NOIR=(0,0,0)
 BLEUGRIS=(85,128,170)
+YELLOW=(255, 255, 71)
 #MISE EN PLACE DE LA FENËTRE
 
 carte=pygame.display.set_mode((1500,700), RESIZABLE) # On ouvre une fenêtre graphique de 440*480 (large*hauteur) + la taille peut s'adapter
@@ -86,14 +87,6 @@ Str_carte=[
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
  [1,1,1,1,1,1,1,1,1,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
-for x in range(0,20):
-	for y in range(0,14):
-		if Str_carte[y][x]!=0:
-			Case(x,y,Str_carte[y][x],1)
-			if Str_carte[y][x]==3:
-				(xperso,yperso)=Perso(x,y,1,1)
-				(xperso2,yperso2)=Perso(x,y,1,2)
-
 
 pygame.display.update()
 def Echange(coord1, coord2, coord3, coord4):
@@ -115,9 +108,10 @@ def Verif(futurx,futury,mur): #on vérifie la position du joueur
 				return 1
 		else:
 			return 1
-	if Str_carte[futury/46][futurx/71]==4:
+	elif Str_carte[futury/46][futurx/71]==4:
 		return 2
-
+	else:
+		return 0
 
 def egaux():
 	if xperso==xperso2 and yperso==yperso2:
@@ -159,9 +153,85 @@ def move(xperso,yperso,de_x,de_y,nb):
 		pygame.display.update()
 		return (xperso,yperso)
 
+def tirer(xperso,yperso,direction):
+	x_debut=0
+	x_fin=3
+	while x_fin <18:
+		#pygame.time.wait(500)
+		#pygame.time.delay(2000)
+		for initial in range(x_debut,x_fin):
+			x_projectile=xReel(xperso)+xReel(initial)
+			y_projectile=yReel(yperso)+20
+			pygame.draw.rect(carte, YELLOW, (x_projectile,y_projectile,71/4,46/4))
+		x_debut+=1
+		x_fin+=1
+	return(xperso,yperso)
+
+def tireur(x,y,direction):
+	valeurx=x
+	valeury=y
+	if direction==1: #en haut
+		while y!=valeury-5*46:
+			verif=Verif(x,y-46,0)
+			if verif!=0:
+				pygame.draw.rect(carte, YELLOW, (x,y-46,71/4,46/4))
+				pygame.display.update()
+				y=y-46
+			else:
+				y=valeury-5*46
+	if direction==3: #en bas
+		while y!=valeury+5*46:
+			verif=Verif(x,y+46,0)
+			if verif!=0:
+				pygame.draw.rect(carte, YELLOW, (x,y+46,71/4,46/4))
+				pygame.display.update()
+				y=y+46
+			else:
+				y=valeury+5*46
+	if direction==2: #a gauche
+		while x!=valeurx-5*71:
+			verif=Verif(x-71,y,0)
+			if verif!=0:
+				pygame.draw.rect(carte, YELLOW, (x-71,y,71/4,46/4))
+				pygame.display.update()
+				x=x-71
+			else:
+				x=valeurx-5*71
+	if direction==4: #a droite
+		while x!=valeurx+5*71:
+			verif=Verif(x+71,y,0)
+			if verif!=0:
+				pygame.display.update()
+				pygame.draw.rect(carte, YELLOW, (x+71,y,71/4,46/4))
+				#Case(x+71,y,2,0)
+				pygame.display.update()
+				x=x+71
+			else:
+				x=valeurx+5*71
+	else:
+		return
 
 
+#################################################################################
+# 																				#
+# 																				#
+# 																				#
+# 		       				DEBUT DE LA BOUCLE PRINCIPALE						#
+# 																				#
+# 																				#
+# 																				#
+#################################################################################
 
+
+for x in range(0,20):
+	for y in range(0,14):
+		if Str_carte[y][x]!=0:
+			Case(x,y,Str_carte[y][x],1)
+			if Str_carte[y][x]==3:
+				(xperso,yperso)=Perso(x,y,1,1)
+				(xperso2,yperso2)=Perso(x,y,1,2)
+pygame.display.update()
+#tirer(0,0,1)
 
 continuer=1
 
@@ -171,27 +241,41 @@ while continuer:
 		if event.type == KEYDOWN:
 			if event.key == K_RIGHT:
 				(xperso,yperso)=move(xperso,yperso,71,0,1)
+				direction=1
 			
 			if event.key == K_LEFT:
 				(xperso,yperso)=move(xperso,yperso,-71,0,1)
+				direction=2
 
 			if event.key == K_UP:
 				(xperso,yperso)=move(xperso,yperso,0,-46,1)
+				direction=3
 
 			if event.key == K_DOWN:
 				(xperso,yperso)=move(xperso,yperso,0,46,1)
+				direction=4
 			
 			if event.key== K_w:
 				(xperso2,yperso2)=move(xperso2,yperso2,0,-46,2)
+				direction=1
 
 			if event.key== K_a:
 				(xperso2,yperso2)=move(xperso2,yperso2,-71,0,2)
+				direction=2
 
 			if event.key== K_s:
 				(xperso2,yperso2)=move(xperso2,yperso2,0,46,2)
+				direction=3
 
 			if event.key== K_d:
 				(xperso2,yperso2)=move(xperso2,yperso2,71,0,2)
+				direction=4
+
+			if event.key == K_m:
+				tireur(xperso,yperso,direction)
+			
+			if event.key == K_t:
+				tireur(xperso2,yperso2,direction)
 
 		if event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
 			continuer = 0
